@@ -1,11 +1,12 @@
 class Pokemon:
-	def __init__(self, name, level, element, max_health, current_health, is_knocked_out):
+	def __init__(self, name, level, element, max_health, current_health, is_knocked_out, power):
 		self.name = name
 		self.level = level
 		self.element = element
 		self.max_health = max_health
 		self.current_health = current_health
 		self.is_knocked_out = is_knocked_out
+		self.power = power
 	
 	def dead(self):
 		if self.current_health <= 0:
@@ -27,7 +28,11 @@ class Pokemon:
 		self.current_health += amount
 		print(f"{self.name} has gained {amount} HP!")
 
-pikacu = Pokemon('Pikacu', 25, 'electric', 50, 50, False)
+	def attack(self, poke):
+		print(f"{self.name} attacked!")
+		poke.lose_health(self.power)
 
-pikacu.lose_health(50)
-pikacu.regain_health(50)
+pikachu = Pokemon("Pickachu", 10, 'electric', 100, 100, False, 12)
+ratattat = Pokemon("Ratattat", 10, 'normall', 75, 75, False, 5)
+
+pikachu.attack(ratattat)
