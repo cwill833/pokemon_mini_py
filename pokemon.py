@@ -1,13 +1,28 @@
 class Pokemon:
-	def __init__(self, name, level, element, max_health, current_health, is_knocked_out, power):
+	def __init__(self, name, level, element, max_health, current_health, is_knocked_out):
 		self.name = name
 		self.level = level
 		self.element = element
 		self.max_health = max_health
 		self.current_health = current_health
 		self.is_knocked_out = is_knocked_out
-		self.power = power
-	
+
+	def advantage(self, poke):
+		if self.element == 'fire' and poke.element == 'grass':
+			return True
+		elif self.element == 'water' and poke.element == 'fire':
+			return True
+		elif self.element == 'grass' and poke.element == 'water':
+			return True
+
+	def disadvantage(self, poke):
+		if self.element == 'fire' and poke.element == 'water':
+			return True
+		elif self.element == 'water' and poke.element == 'grass':
+			return True
+		elif self.element == 'grass' and poke.element == 'fire':
+			return True
+
 	def dead(self):
 		if self.current_health <= 0:
 			self.is_knocked_out = True
@@ -30,9 +45,20 @@ class Pokemon:
 
 	def attack(self, poke):
 		print(f"{self.name} attacked!")
-		poke.lose_health(self.power)
+		if self.advantage(poke):
+			print('Attach was super effective!')
+			poke.lose_health(self.level * 2)
+		elif self.disadvantage(poke):
+			print('Attach was not that effective...')
+			poke.lose_health(self.level // 2)
+		else:
+			poke.lose_health(self.level)
 
-pikachu = Pokemon("Pickachu", 10, 'electric', 100, 100, False, 12)
-ratattat = Pokemon("Ratattat", 10, 'normall', 75, 75, False, 5)
 
-pikachu.attack(ratattat)
+
+
+bulbasore = Pokemon("Bulbasore", 10, 'grass', 100, 100, False)
+charmander = Pokemon("Charmander", 10, 'fire', 75, 75, False)
+
+bulbasore.attack(charmander)
+charmander.attack(bulbasore)
