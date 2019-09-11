@@ -54,11 +54,37 @@ class Pokemon:
 		else:
 			poke.lose_health(self.level)
 
+	def __repr__(self):
+		return f'{self.name}'
+
+class Trainer:
+	def __init__(self, name, pokemon, num_of_potions, currently_active):
+		self.name = name
+		self.pokemon = pokemon
+		self.num_of_potions = num_of_potions
+		self.currently_active = currently_active
+	
+	def heal(self):
+		self.pokemon[self.currently_active].regain_health(20)
+
+	def switch_pokemon(self, num):
+		if num >= 0 and num < len(self.pokemon):
+			self.currently_active = num
+	
+	def battle(self, trainer):
+		pass
+		
 
 
 
-bulbasore = Pokemon("Bulbasore", 10, 'grass', 100, 100, False)
-charmander = Pokemon("Charmander", 10, 'fire', 75, 75, False)
 
-bulbasore.attack(charmander)
-charmander.attack(bulbasore)
+bulbasore = Pokemon("Bulbasore", 5, 'grass', 59, 59, False)
+charmander = Pokemon("Charmander", 5, 'fire', 66, 66, False)
+squirtal = Pokemon("Squirtal", 5, 'water', 50, 50, False)
+
+bulbasore.attack(squirtal)
+
+chris = Trainer('Chris', [bulbasore, charmander, squirtal], 4, 0)
+print(chris.pokemon[2].current_health)
+chris.heal()
+
